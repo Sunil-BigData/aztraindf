@@ -1,0 +1,17 @@
+{
+	"name": "FileServervmlogs",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "FileServer",
+		"typeProperties": {
+			"host": "C:\\inetpub\\logs\\LogFiles\\W3SVC1",
+			"userId": "vmadmin",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJmMGYzNzJjZS1mMzdkLTRmZDMtYTc4YS1iNWRhZTI0N2Y0YzgiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "integrationRuntime1",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

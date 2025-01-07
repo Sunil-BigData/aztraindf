@@ -1,0 +1,29 @@
+{
+	"name": "DelimitedTextvmlogsdata",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "azlakedatastore",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "u_ex250106.log",
+				"fileSystem": "vmlogs"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "#Software: Microsoft Internet Information Services 10.0",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

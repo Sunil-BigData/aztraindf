@@ -1,0 +1,19 @@
+{
+	"name": "csvtoJson",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "azlakedatastore",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileSystem": "json"
+			}
+		},
+		"schema": {}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

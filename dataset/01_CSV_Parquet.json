@@ -1,0 +1,20 @@
+{
+	"name": "01_CSV_Parquet",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "azlakedatastore",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileSystem": "parquet"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

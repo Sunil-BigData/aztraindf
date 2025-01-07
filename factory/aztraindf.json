@@ -1,0 +1,9 @@
+{
+	"name": "aztraindf",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "c9011b94-7900-4fad-9559-7578e74bd531",
+		"tenantId": "e9878ac9-164e-4173-9df1-59195efce65a"
+	}
+}

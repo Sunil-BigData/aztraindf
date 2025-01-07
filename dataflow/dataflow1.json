@@ -1,0 +1,119 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "AzureSqlTable_dimCustomer",
+						"type": "DatasetReference"
+					},
+					"name": "sourcecustomerstream"
+				},
+				{
+					"dataset": {
+						"referenceName": "AzureSynapseAnalyticsTable_customer",
+						"type": "DatasetReference"
+					},
+					"name": "sourcemaxcustomersk"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "AzureSynapseAnalyticsTable_customer",
+						"type": "DatasetReference"
+					},
+					"name": "sinkCustomerStream"
+				},
+				{
+					"name": "sinkMaxCustomerSK"
+				}
+			],
+			"transformations": [
+				{
+					"name": "selectCustomer"
+				},
+				{
+					"name": "surrogateKeyCustomerSK"
+				},
+				{
+					"name": "derivedColumnCustomerSK"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          CustomerID as integer,",
+				"          NameStyle as boolean,",
+				"          Title as string,",
+				"          FirstName as string,",
+				"          MiddleName as string,",
+				"          LastName as string,",
+				"          Suffix as string,",
+				"          CompanyName as string,",
+				"          SalesPerson as string,",
+				"          EmailAddress as string,",
+				"          Phone as string,",
+				"          PasswordHash as string,",
+				"          PasswordSalt as string,",
+				"          rowguid as string,",
+				"          ModifiedDate as timestamp",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     query: 'select * from SalesLT.Customer where CustomerID > 2000',",
+				"     format: 'query') ~> sourcecustomerstream",
+				"source(output(",
+				"          MAXCustomerSK as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     query: 'select MAX(CustomerSK) AS MAXCustomerSK from dbo.dimCustomer',",
+				"     format: 'query',",
+				"     staged: true) ~> sourcemaxcustomersk",
+				"sourcecustomerstream select(mapColumn(",
+				"          CustomerID,",
+				"          CompanyName",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> selectCustomer",
+				"selectCustomer keyGenerate(output(CustomerSK as long),",
+				"     startAt: 1L,",
+				"     stepValue: 1L) ~> surrogateKeyCustomerSK",
+				"surrogateKeyCustomerSK derive(CustomerSK = CustomerSK + sinkMaxCustomerSK#outputs()[1].MAXCustomerSK) ~> derivedColumnCustomerSK",
+				"derivedColumnCustomerSK sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          CustomerSK as integer,",
+				"          CustomerID as integer,",
+				"          CompanyName as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     staged: true,",
+				"     allowCopyCommand: true,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          CustomerSK,",
+				"          CustomerID,",
+				"          CompanyName",
+				"     )) ~> sinkCustomerStream",
+				"sourcemaxcustomersk sink(validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     store: 'cache',",
+				"     format: 'inline',",
+				"     output: false,",
+				"     saveOrder: 1) ~> sinkMaxCustomerSK"
+			]
+		}
+	}
+}

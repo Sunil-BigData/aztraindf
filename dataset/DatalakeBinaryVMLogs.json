@@ -1,0 +1,18 @@
+{
+	"name": "DatalakeBinaryVMLogs",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "azlakedatastore",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileSystem": "vmlogs"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
