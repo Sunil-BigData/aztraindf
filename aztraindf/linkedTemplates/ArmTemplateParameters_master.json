@@ -1,0 +1,36 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "aztraindf"
+		},
+		"FileServervmlogs_password": {
+			"value": ""
+		},
+		"LS_Azsql_connectionString": {
+			"value": ""
+		},
+		"azlakedatastore_accountKey": {
+			"value": ""
+		},
+		"azsypws_connectionString": {
+			"value": ""
+		},
+		"FileServervmlogs_properties_typeProperties_host": {
+			"value": "C:\\inetpub\\logs\\LogFiles\\W3SVC1"
+		},
+		"FileServervmlogs_properties_typeProperties_userId": {
+			"value": "vmadmin"
+		},
+		"azlakedatastore_properties_typeProperties_url": {
+			"value": "https://azlakedatastore.dfs.core.windows.net/"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
